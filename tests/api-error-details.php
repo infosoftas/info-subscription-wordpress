@@ -66,6 +66,7 @@ $check = function ($ok, $name) use (&$failed, &$results) {
     $results[] = ($ok ? 'PASS: ' : 'FAIL: ') . $name;
 };
 $notice = new ReflectionMethod(Infosub_Settings::class, 'render_api_notice');
+$notice->setAccessible(true);
 $render = function () use ($notice) {
     ob_start();
     $notice->invoke(null);
