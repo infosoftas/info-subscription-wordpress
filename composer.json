@@ -1,0 +1,47 @@
+{
+    "name": "infosoft/infosub-wordpress",
+    "description": "INFO-Subscription Access WordPress plugin.",
+    "type": "wordpress-plugin",
+    "require": {
+        "php": ">=8.0",
+        "firebase/php-jwt": "^7.0"
+    },
+    "config": {
+        "platform": {
+            "php": "8.0"
+        },
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "extra": {
+        "strauss": {
+            "target_directory": "vendor",
+            "namespace_prefix": "Infosub\\Vendor\\",
+            "classmap_prefix": "Infosub_Vendor_",
+            "constant_prefix": "INFOSUB_VENDOR_",
+            "include_modified_date": false,
+            "include_author": false
+        }
+    },
+    "scripts": {
+        "prefix-namespaces": [
+            "sh -c 'test -f bin/strauss.phar || (mkdir -p bin && curl -fsSL -o bin/strauss.phar https://github.com/BrianHenryIE/strauss/releases/download/0.31.1/strauss.phar)'",
+            "@php bin/strauss.phar",
+            "@composer dump-autoload"
+        ],
+        "post-install-cmd": [
+            "@prefix-namespaces"
+        ],
+        "post-update-cmd": [
+            "@prefix-namespaces"
+        ],
+        "build": [
+            "@composer install --no-dev --no-interaction",
+            "@php bin/build.php"
+        ]
+    },
+    "scripts-descriptions": {
+        "prefix-namespaces": "Download Strauss and prefix the dependencies in vendor/.",
+        "build": "Fresh no-dev install, then zip the plugin to dist/infosub.zip."
+    }
+}

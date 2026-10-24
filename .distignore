@@ -1,0 +1,19 @@
+# Files and folders left out of the distributable zip (see bin/build.php).
+# One pattern per line, relative to the plugin root. Patterns without a "/"
+# also match any file or folder name at any depth.
+.distignore
+.git
+.github
+.gitignore
+.gitattributes
+.env
+.env.*
+wp-config.php
+*.log
+.DS_Store
+Thumbs.db
+bin
+dist
+tests
+composer.json
+composer.lock

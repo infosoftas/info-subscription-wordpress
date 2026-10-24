@@ -1,0 +1,10 @@
+/bin/strauss.phar
+/dist/
+/vendor/
+.env
+.env.*
+!.env.example
+wp-config.php
+*.log
+.DS_Store
+Thumbs.db
