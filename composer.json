@@ -2,6 +2,7 @@
     "name": "infosoft/infosub-wordpress",
     "description": "INFO-Subscription Access WordPress plugin.",
     "type": "wordpress-plugin",
+    "license": "MIT",
     "require": {
         "php": ">=8.0",
         "firebase/php-jwt": "^7.0"

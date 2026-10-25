@@ -5,6 +5,10 @@
  * Version:           0.1.0
  * Requires at least: 5.6
  * Requires PHP:      8.0
+ * Author:            Infosoft AS
+ * Author URI:        https://infosoft.as/
+ * License:           MIT
+ * License URI:       https://opensource.org/license/mit
  * Text Domain:       infosub
  */
 

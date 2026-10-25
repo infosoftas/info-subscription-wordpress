@@ -161,15 +161,19 @@ application registrations or real tenant access.
 
 To prepare a release:
 
-1. Update both the `Version:` header and `INFOSUB_VERSION` in `infosub.php`.
+1. Update both the `Version:` header and `INFOSUB_VERSION` in `infosub.php`, and the
+   `Stable tag:` and changelog in `readme.txt`.
 2. Commit, then push a matching version tag, for example `v0.1.0`.
-3. Actions verifies the tag version, builds and tests the plugin, then creates a
+3. Actions verifies the tag and Stable tag match the version, builds and tests the plugin, then creates a
    **draft GitHub release** with `infosub.zip` attached.
 4. Review release notes and verify real subscriber sign-in, API product loading
    and article access in a staging site before publishing the draft.
 
+`readme.txt` is the WordPress.org plugin directory readme (shipped in the zip); this
+`README.md` is for GitHub. Before submitting to or updating WordPress.org, run
+[Plugin Check](https://wordpress.org/plugins/plugin-check/) on the built plugin; it must
+report no errors.
+
 ## License
 
-A license for the plugin has not yet been selected. Repository access does not
-grant permission to redistribute it. Select a license before public distribution.
-Bundled dependencies retain their own license notices.
+MIT. See [LICENSE](LICENSE). Bundled dependencies retain their own license notices.

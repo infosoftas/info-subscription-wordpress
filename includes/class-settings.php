@@ -307,6 +307,7 @@ class Infosub_Settings
             printf(
                 '<input type="text" class="regular-text" value="%s" disabled="disabled" /><p class="description">%s</p>',
                 esc_attr($shown),
+                /* translators: %s: name of a PHP constant. */
                 esc_html(sprintf(__('Set by %s in wp-config.php.', 'infosub'), self::$constants[$key]))
             );
             return;
@@ -373,6 +374,7 @@ class Infosub_Settings
             . esc_html('openid profile ' . self::api_connection()['scope']) . '</code></p>';
         if ($items && $when) {
             echo '<p>' . esc_html(sprintf(
+                /* translators: 1: number of products, 2: date and time they were loaded. */
                 _n('%1$d product loaded (%2$s).', '%1$d products loaded (%2$s).', count($items), 'infosub'),
                 count($items),
                 wp_date(get_option('date_format') . ' ' . get_option('time_format'), $when)
@@ -419,7 +421,11 @@ class Infosub_Settings
         }
         $count    = isset($_GET['count']) ? absint($_GET['count']) : 0;
         $messages = array(
-            'ok'             => array('success', sprintf(_n('%d product loaded from INFO-Subscription.', '%d products loaded from INFO-Subscription.', $count, 'infosub'), $count)),
+            'ok'             => array('success', sprintf(
+                /* translators: %d: number of products. */
+                _n('%d product loaded from INFO-Subscription.', '%d products loaded from INFO-Subscription.', $count, 'infosub'),
+                $count
+            )),
             'empty'          => array('warning', __('The API answered, but returned no products for this tenant.', 'infosub')),
             'incomplete'     => array('warning', __('Fill in and save the tenant ID and API client ID first.', 'infosub')),
             'unreachable'    => array('error', __('Could not load the API authentication service configuration. Try again in a moment.', 'infosub')),

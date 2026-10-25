@@ -45,8 +45,13 @@ jobs:
           TAG: ${{ github.ref_name }}
         run: |
           version=$(awk '/^[[:space:]]*\* Version:/ {print $3}' infosub.php)
+          stable=$(awk -F': *' '/^Stable tag:/ {print $2}' readme.txt | tr -d '\r')
           if [ "$TAG" != "v$version" ]; then
             echo "::error::Tag $TAG does not match plugin version v$version"
+            exit 1
+          fi
+          if [ "$stable" != "$version" ]; then
+            echo "::error::readme.txt Stable tag $stable does not match plugin version $version"
             exit 1
           fi
       - name: Validate and build

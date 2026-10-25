@@ -235,6 +235,7 @@ class Infosub_Meta_Box
             printf(
                 '<option value="%s" selected="selected">%s</option>',
                 esc_attr($value),
+                /* translators: %s: product ID typed by an editor. */
                 esc_html(sprintf(__('Custom ID: %s', 'infosub'), $value))
             );
         }
@@ -243,6 +244,7 @@ class Infosub_Meta_Box
         $when = Infosub_Api::fetched_at();
         if ($when) {
             echo '<p class="description">' . esc_html(sprintf(
+                /* translators: %s: date the product list was loaded. */
                 __('Product list loaded %s. Refresh it under Settings, INFO-Subscription.', 'infosub'),
                 wp_date(get_option('date_format'), $when)
             )) . '</p>';
