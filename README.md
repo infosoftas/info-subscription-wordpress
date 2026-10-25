@@ -4,8 +4,9 @@ Let visitors sign in with INFO-Subscription and restrict articles to signed-in
 subscribers or subscribers holding **any one** of the selected products.
 Subscribers do not need WordPress accounts.
 
-**Status:** pre-release. Live API sign-in with PKCE still needs verification before
-production use. This repository is private; downloads require repository access.
+**Status:** pre-release, verified against live INFO-Subscription sign-in and API.
+Not yet in the WordPress.org plugin directory (waiting for a service privacy policy).
+This repository is private; downloads require repository access.
 
 ## Install
 
