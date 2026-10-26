@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       INFO-Subscription Access
  * Description:       Lets visitors sign in with INFO-Subscription and restricts articles to subscribers holding the right product. No WordPress user accounts are needed for subscribers.
- * Version:           0.1.0
+ * Version:           0.2.0
  * Requires at least: 5.6
  * Requires PHP:      8.0
  * Author:            Infosoft AS
@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('INFOSUB_VERSION', '0.1.0');
+define('INFOSUB_VERSION', '0.2.0');
 define('INFOSUB_FILE', __FILE__);
 define('INFOSUB_DIR', plugin_dir_path(__FILE__));
 
