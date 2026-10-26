@@ -6,6 +6,7 @@
 .github
 .gitignore
 .gitattributes
+.wordpress-org
 .env
 .env.*
 wp-config.php
