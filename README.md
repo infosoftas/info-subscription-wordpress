@@ -6,7 +6,12 @@ Subscribers do not need WordPress accounts.
 
 **Status:** pre-release, verified against live INFO-Subscription sign-in and API.
 Not yet in the WordPress.org plugin directory (waiting for a service privacy policy).
-This repository is private; downloads require repository access.
+
+## Screenshots
+
+| Before sign-in | After sign-in |
+| --- | --- |
+| ![Protected article showing a teaser with sign-in and subscribe links](.wordpress-org/screenshot-1.png) | ![The full protected article after signing in](.wordpress-org/screenshot-2.png) |
 
 ## Install
 

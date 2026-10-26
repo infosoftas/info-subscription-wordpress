@@ -57,6 +57,11 @@ Articles without an access rule stay public.
 
 No. Any one of the selected products gives access.
 
+== Screenshots ==
+
+1. A protected article before sign-in: visitors see a teaser with sign-in and subscribe links.
+2. The same article after a subscriber with access signs in.
+
 == External services ==
 
 This plugin connects to services operated by Infosoft AS for INFO-Subscription. It does not work without an INFO-Subscription tenant.
