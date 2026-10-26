@@ -4,7 +4,7 @@ Tags: paywall, subscription, membership, restrict content, single sign-on
 Requires at least: 5.6
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: MIT
 License URI: https://opensource.org/license/mit
 
@@ -75,6 +75,10 @@ This plugin connects to services operated by Infosoft AS for INFO-Subscription. 
 Terms and privacy policy: https://infosoft.as/privacy/
 
 == Changelog ==
+
+= 0.2.0 =
+* After a password reset, the follow-up sign-in prefills the subscriber's email address.
+* A clear message is shown if the password-reset sign-in cannot be completed.
 
 = 0.1.0 =
 * First release.

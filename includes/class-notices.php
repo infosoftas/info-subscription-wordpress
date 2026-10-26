@@ -28,6 +28,7 @@ class Infosub_Notices
             'state'          => __('Your sign-in was interrupted or took too long. Please try again.', 'infosub'),
             'provider'       => __('The sign-in service reported a problem. Please try again.', 'infosub'),
             'token_invalid'  => __('We could not verify your sign-in. Please try again.', 'infosub'),
+            'password_reset' => __('Your password was changed. Please sign in with your new password.', 'infosub'),
             'session'        => __('We could not start your session. Please make sure cookies are enabled and try again.', 'infosub'),
             'config'         => __('Sign-in is temporarily unavailable.', 'infosub'),
         ));

@@ -148,6 +148,50 @@ try {
     });
     $check(isset($errors[0]) && strpos($errors[0], 'token_invalid') === 0, 'tampered id_token is rejected');
     $check(!Infosub_Session::has_product('PRODUCT-A'), 'tampered id_token gives no access');
+
+    // 5. Forgotten-password token: sign in again, prefilled with the verified email.
+    $forgot_token = function ($nonce) use ($meta, $client_id, $private_pem) {
+        return JWT::encode(array(
+            'iss'              => $meta['issuer'],
+            'aud'              => $client_id,
+            'nonce'            => $nonce,
+            'iat'              => time(),
+            'exp'              => time() + 300,
+            'isForgotPassword' => true,
+            'emails'           => array('reader@example.com'),
+        ), $private_pem, 'RS256', 'k1');
+    };
+    $post_callback = function ($state, $id_token) use ($follow) {
+        $_COOKIE[Infosub_Auth::STATE_COOKIE] = $state;
+        $callback = new WP_REST_Request('POST', '/infosub/v1/callback');
+        $callback->set_body_params(array('state' => $state, 'id_token' => $id_token));
+        return $follow(function () use ($callback) {
+            Infosub_Auth::handle_callback($callback);
+        });
+    };
+
+    $location = $follow(function () use ($login) {
+        Infosub_Auth::handle_login($login);
+    });
+    parse_str((string) parse_url((string) $location, PHP_URL_QUERY), $query);
+    $state  = isset($query['state']) ? (string) $query['state'] : '';
+    $record = get_transient('infosub_oidc_state_' . $state);
+    $errors = array();
+    $location = $post_callback($state, $forgot_token(is_array($record) ? $record['nonce'] : ''));
+    $query    = array();
+    parse_str((string) parse_url((string) $location, PHP_URL_QUERY), $query);
+    $check(strpos((string) $location, $meta['authorization_endpoint']) === 0 && !$errors, 'forgotten-password token restarts sign-in');
+    $check(isset($query['prompt']) && $query['prompt'] === 'login', 'forced sign-in asks for credentials');
+    $check(isset($query['login_hint']) && $query['login_hint'] === 'reader@example.com', 'forced sign-in prefills the verified email');
+
+    // 6. A second forgotten-password token on the forced sign-in stops with a clear error.
+    $state  = isset($query['state']) ? (string) $query['state'] : '';
+    $record = get_transient('infosub_oidc_state_' . $state);
+    $errors = array();
+    $location = $post_callback($state, $forgot_token(is_array($record) ? $record['nonce'] : ''));
+    $check(isset($errors[0]) && strpos($errors[0], 'password_reset') === 0, 'repeated forgotten-password token reports password_reset');
+    $check(strpos((string) $location, 'infosub_error=password_reset') !== false, 'visitor is sent back with the password_reset notice');
+    $check(!Infosub_Session::has_product('PRODUCT-A'), 'forgotten-password tokens give no access');
 } finally {
     Infosub_Session::destroy();
     foreach ($saved as $name => $value) {

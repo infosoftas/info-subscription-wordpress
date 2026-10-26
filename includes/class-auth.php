@@ -146,13 +146,14 @@ class Infosub_Auth
         }
 
         // 5. Forgotten-password journey: the token then lacks the subscription claims.
-        //    Documented workaround: clear local session cookies and run the login again.
+        //    Documented workaround: clear local session cookies and run the login again,
+        //    prefilling the verified email so the subscriber only enters the new password.
         if (!empty($claims->isForgotPassword) && filter_var($claims->isForgotPassword, FILTER_VALIDATE_BOOLEAN)) {
             Infosub_Session::destroy();
             if (empty($record['forced'])) {
-                self::start_login($return, true, true); // ends in a redirect
+                self::start_login($return, true, true, self::login_hint($claims)); // ends in a redirect
             }
-            self::fail('token_invalid', $return, 'isForgotPassword persisted after a forced login');
+            self::fail('password_reset', $return, 'isForgotPassword persisted after a forced login');
         }
 
         // 6. Start the local session from the claims.
@@ -199,8 +200,9 @@ class Infosub_Auth
      * @param string $return Where to send the visitor afterwards (already validated).
      * @param bool   $force  Ask for credentials again (prompt=login).
      * @param bool   $forced True when this is the retry after a forgotten-password journey.
+     * @param string $login_hint Optional sign-in name to prefill on the sign-in page.
      */
-    private static function start_login($return, $force, $forced)
+    private static function start_login($return, $force, $forced, $login_hint = '')
     {
         $cfg  = self::config();
         $meta = $cfg ? self::metadata($cfg) : null;
@@ -233,6 +235,9 @@ class Infosub_Auth
         );
         if ($force) {
             $params['prompt'] = 'login';
+        }
+        if ($login_hint !== '') {
+            $params['login_hint'] = $login_hint;
         }
 
         wp_redirect(esc_url_raw(self::append_query($meta['authorization_endpoint'], $params)), 302);
@@ -411,6 +416,14 @@ class Infosub_Auth
     {
         $url = is_string($url) ? $url : '';
         return wp_validate_redirect(esc_url_raw($url), home_url('/'));
+    }
+
+    /** First valid email from the verified id_token, or ''. */
+    private static function login_hint($claims)
+    {
+        $emails = isset($claims->emails) ? (array) $claims->emails : array();
+        $email  = isset($emails[0]) && is_string($emails[0]) ? $emails[0] : '';
+        return is_email($email) ? $email : '';
     }
 
     /** B2C endpoints already contain "?p=policy", so append with the right separator. */
